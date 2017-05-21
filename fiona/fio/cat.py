@@ -61,7 +61,7 @@ def cat(ctx, files, precision, indent, compact, ignore_errors, dst_crs,
 
     # first layer is the default
     for i in range(1, len(files) + 1):
-        if str(i) not in layer.keys():
+        if str(i) not in list(layer.keys()):
             layer[str(i)] = [0]
     try:
         with fiona.drivers(CPL_DEBUG=verbosity > 2):
@@ -82,7 +82,7 @@ def cat(ctx, files, precision, indent, compact, ignore_errors, dst_crs,
                                 feat['geometry'] = g
                                 feat['bbox'] = fiona.bounds(g)
                             if use_rs:
-                                click.echo(u'\u001e', nl=False)
+                                click.echo('\u001e', nl=False)
                             click.echo(json.dumps(feat, **dump_kwds))
 
     except Exception:

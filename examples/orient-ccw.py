@@ -14,7 +14,7 @@ def signed_area(coords):
     algorithm at http://www.cgafaq.info/wiki/Polygon_Area. A value >= 0
     indicates a counter-clockwise oriented ring.
     """
-    xs, ys = map(list, zip(*coords))
+    xs, ys = list(map(list, list(zip(*coords))))
     xs.append(xs[1])
     ys.append(ys[1]) 
     return sum(xs[i]*(ys[i+1]-ys[i-1]) for i in range(1, len(coords)))/2.0
@@ -60,6 +60,6 @@ with fiona.open('docs/data/test_uk.shp', 'r') as source:
 
                 sink.write(f)
             
-            except Exception, e:
+            except Exception as e:
                 logging.exception("Error processing feature %s:", f['id'])
 

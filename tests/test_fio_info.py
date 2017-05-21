@@ -48,7 +48,7 @@ def test_all_registered():
 def _filter_info_warning(lines):
     """$ fio info can issue a RuntimeWarning, but click adds stderr to stdout
     so we have to filter it out before decoding JSON lines."""
-    lines = list(filter(lambda x: 'RuntimeWarning' not in x, lines))
+    lines = list([x for x in lines if 'RuntimeWarning' not in x])
     return lines
 
 

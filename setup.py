@@ -234,7 +234,7 @@ extras_require = {
     'calc': ['shapely'],
     'test': ['pytest>=3', 'pytest-cov']
 }
-extras_require['all'] = list(set(it.chain(*extras_require.values())))
+extras_require['all'] = list(set(it.chain(*list(extras_require.values()))))
 
 
 setup_args = dict(

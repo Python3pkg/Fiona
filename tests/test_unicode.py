@@ -79,18 +79,18 @@ class UnicodeStringFieldTest(unittest.TestCase):
                 'type': 'Feature',
                 'geometry': {'type': 'Point', 'coordinates': [0, 0]},
                 'properties': {
-                    'label': u'徐汇区',
+                    'label': '徐汇区',
                     'num': 0}}])
 
         with fiona.open(os.path.join(self.tempdir), encoding='latin1') as c:
             f = next(iter(c))
             # Next assert fails.
-            self.assertEqual(f['properties']['label'], u'徐汇区')
+            self.assertEqual(f['properties']['label'], '徐汇区')
 
     def test_write_utf8(self):
         schema = {
             'geometry': 'Point',
-            'properties': {'label': 'str', u'verit\xe9': 'int'}}
+            'properties': {'label': 'str', 'verit\xe9': 'int'}}
         with fiona.open(os.path.join(self.tempdir, "test-write.shp"),
                         "w", "ESRI Shapefile", schema=schema,
                         encoding='utf-8') as c:
@@ -98,12 +98,12 @@ class UnicodeStringFieldTest(unittest.TestCase):
                 'type': 'Feature',
                 'geometry': {'type': 'Point', 'coordinates': [0, 0]},
                 'properties': {
-                    'label': u'Ba\u2019kelalan', u'verit\xe9': 0}}])
+                    'label': 'Ba\u2019kelalan', 'verit\xe9': 0}}])
 
         with fiona.open(os.path.join(self.tempdir), encoding='utf-8') as c:
             f = next(iter(c))
-            self.assertEqual(f['properties']['label'], u'Ba\u2019kelalan')
-            self.assertEqual(f['properties'][u'verit\xe9'], 0)
+            self.assertEqual(f['properties']['label'], 'Ba\u2019kelalan')
+            self.assertEqual(f['properties']['verit\xe9'], 0)
 
     def test_write_gb18030(self):
         """Can write a simplified Chinese shapefile"""
@@ -116,9 +116,9 @@ class UnicodeStringFieldTest(unittest.TestCase):
             c.writerecords([{
                 'type': 'Feature',
                 'geometry': {'type': 'Point', 'coordinates': [0, 0]},
-                'properties': {'label': u'徐汇区', 'num': 0}}])
+                'properties': {'label': '徐汇区', 'num': 0}}])
 
         with fiona.open(os.path.join(self.tempdir), encoding='gb18030') as c:
             f = next(iter(c))
-            self.assertEqual(f['properties']['label'], u'徐汇区')
+            self.assertEqual(f['properties']['label'], '徐汇区')
             self.assertEqual(f['properties']['num'], 0)

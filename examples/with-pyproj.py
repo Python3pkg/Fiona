@@ -29,12 +29,12 @@ with fiona.open('docs/data/test_uk.shp', 'r') as source:
                 assert f['geometry']['type'] == "Polygon"
                 new_coords = []
                 for ring in f['geometry']['coordinates']:
-                    x2, y2 = transform(p_in, p_out, *zip(*ring))
-                    new_coords.append(zip(x2, y2))
+                    x2, y2 = transform(p_in, p_out, *list(zip(*ring)))
+                    new_coords.append(list(zip(x2, y2)))
                 f['geometry']['coordinates'] = new_coords
                 sink.write(f)
             
-            except Exception, e:
+            except Exception as e:
                 # Writing uncleanable features to a different shapefile
                 # is another option.
                 logging.exception("Error transforming feature %s:", f['id'])

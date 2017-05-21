@@ -28,14 +28,14 @@ class ReadingTest(unittest.TestCase):
 
     def test_open_repr(self):
         # I'm skipping checking the name of the virtual file as it produced by uuid.
-        print(repr(self.c))
+        print((repr(self.c)))
         self.assertTrue(repr(self.c).startswith("<open BytesCollection '/vsimem/"))
         self.assertTrue(repr(self.c).endswith(":OGRGeoJSON', mode 'r' at %s>" % hex(id(self.c))))
 
     def test_closed_repr(self):
         # I'm skipping checking the name of the virtual file as it produced by uuid.
         self.c.close()
-        print(repr(self.c))
+        print((repr(self.c)))
         self.assertTrue(repr(self.c).startswith("<closed BytesCollection '/vsimem/"))
         self.assertTrue(repr(self.c).endswith(":OGRGeoJSON', mode 'r' at %s>" % hex(id(self.c))))
 
@@ -179,7 +179,7 @@ class ReadingTest(unittest.TestCase):
         self.assertEqual(i, 0)
 
     def test_in_keys(self):
-        self.assertTrue(0 in self.c.keys())
+        self.assertTrue(0 in list(self.c.keys()))
         self.assertTrue(0 in self.c)
 
 

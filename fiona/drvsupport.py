@@ -140,10 +140,10 @@ def _filter_supported_drivers():
     global supported_drivers
 
     gdalenv = GDALEnv()
-    ogrdrv_names = gdalenv.start().drivers().keys()
+    ogrdrv_names = list(gdalenv.start().drivers().keys())
     supported_drivers_copy = supported_drivers.copy()
 
-    for drv in supported_drivers.keys():
+    for drv in list(supported_drivers.keys()):
         if drv not in ogrdrv_names:
             del supported_drivers_copy[drv]
 

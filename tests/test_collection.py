@@ -272,7 +272,7 @@ class ReadingTest(unittest.TestCase):
         self.assertEqual(i, 0)
 
     def test_in_keys(self):
-        self.assertTrue(0 in self.c.keys())
+        self.assertTrue(0 in list(self.c.keys()))
         self.assertTrue(0 in self.c)
 
 
@@ -311,7 +311,7 @@ class UnsupportedDriverTest(unittest.TestCase):
     def test_immediate_fail_driver(self):
         schema = {
             'geometry': 'Point',
-            'properties': {'label': 'str', u'verit\xe9': 'int'}}
+            'properties': {'label': 'str', 'verit\xe9': 'int'}}
         self.assertRaises(
             DriverError,
             fiona.open, os.path.join(TEMPDIR, "foo"), "w", "Bogus", schema=schema)
@@ -326,7 +326,7 @@ class GenericWritingTest(unittest.TestCase):
         self.tempdir = tempfile.mkdtemp()
         schema = {
             'geometry': 'Point',
-            'properties': [('label', 'str'), (u'verit\xe9', 'int')]}
+            'properties': [('label', 'str'), ('verit\xe9', 'int')]}
         self.c = fiona.open(os.path.join(self.tempdir, "test-no-iter.shp"),
                             'w', driver="ESRI Shapefile", schema=schema,
                             encoding='Windows-1252')

@@ -22,15 +22,12 @@ def to_string(crs):
     omitted.
     """
     items = []
-    for k, v in sorted(filter(
-            lambda x: x[0] in all_proj_keys and x[1] is not False and (
+    for k, v in sorted([x for x in list(crs.items()) if x[0] in all_proj_keys and x[1] is not False and (
                 isinstance(x[1], (bool, int, float)) or
-                isinstance(x[1], string_types)),
-            crs.items())):
+                isinstance(x[1], string_types))]):
         items.append(
             "+" + "=".join(
-                map(str, filter(
-                    lambda y: (y or y == 0) and y is not True, (k, v)))))
+                map(str, [y for y in (k, v) if (y or y == 0) and y is not True])))
     return " ".join(items)
 
 
@@ -51,9 +48,7 @@ def from_string(prjs):
             return float(v)
         except ValueError:
             return v
-    items = map(
-        lambda kv: len(kv) == 2 and (kv[0], parse(kv[1])) or (kv[0], True),
-        (p.split('=') for p in parts))
+    items = [len(kv) == 2 and (kv[0], parse(kv[1])) or (kv[0], True) for kv in (p.split('=') for p in parts)]
     return dict((k, v) for k, v in items if k in all_proj_keys)
 
 
@@ -180,6 +175,6 @@ _param_data = """
 +wktext    Marker
 """
 
-_lines = filter(lambda x: len(x) > 1, _param_data.split("\n"))
+_lines = [x for x in _param_data.split("\n") if len(x) > 1]
 all_proj_keys = list(
     set(line.split()[0].lstrip("+").strip() for line in _lines)) + ['no_mayo']

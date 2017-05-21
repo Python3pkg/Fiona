@@ -3,6 +3,7 @@
 from matplotlib import pyplot
 from descartes import PolygonPatch
 import fiona
+from functools import reduce
 
 BLUE = '#6699cc'
 

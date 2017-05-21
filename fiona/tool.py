@@ -75,7 +75,7 @@ def main(args, dump_kw, item_sep, ignore_errors):
             with fiona.open(args.infile) as source:
 
                 meta = source.meta.copy()
-                meta['fields'] = dict(source.schema['properties'].items())
+                meta['fields'] = dict(list(source.schema['properties'].items()))
 
                 if args.description:
                     meta['name'] = args.infile

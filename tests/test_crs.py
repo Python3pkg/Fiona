@@ -12,7 +12,7 @@ def test_from_string():
     # A PROJ.4 string with extra whitespace.
     val = crs.from_string(
         " +proj=longlat +ellps=WGS84 +datum=WGS84  +no_defs +foo  ")
-    assert len(val.items()) == 4
+    assert len(list(val.items())) == 4
     assert val['proj'] == 'longlat'
     assert val['ellps'] == 'WGS84'
     assert val['datum'] == 'WGS84'
@@ -24,7 +24,7 @@ def test_from_string_utm():
     # A PROJ.4 string with extra whitespace and integer UTM zone.
     val = crs.from_string(
         " +proj=utm +zone=13 +ellps=WGS84 +foo  ")
-    assert len(val.items()) == 3
+    assert len(list(val.items())) == 3
     assert val['proj'] == 'utm'
     assert val['ellps'] == 'WGS84'
     assert val['zone'] == 13
@@ -81,11 +81,11 @@ def test_from_epsg_neg():
 def test_to_string_unicode():
     # See issue #83.
     val = crs.to_string({
-        u'units': u'm',
-        u'no_defs': True,
-        u'datum': u'NAD83',
-        u'proj': u'utm',
-        u'zone': 16})
+        'units': 'm',
+        'no_defs': True,
+        'datum': 'NAD83',
+        'proj': 'utm',
+        'zone': 16})
     assert 'NAD83' in val
 
 

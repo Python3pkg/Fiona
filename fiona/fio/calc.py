@@ -1,4 +1,4 @@
-from __future__ import division
+
 import json
 import logging
 
@@ -55,7 +55,7 @@ def calc(ctx, property_name, expression, overwrite, use_rs):
                     feat, expression)
 
                 if use_rs:
-                    click.echo(u'\u001e', nl=False)
+                    click.echo('\u001e', nl=False)
                 click.echo(json.dumps(feat))
 
     except Exception:

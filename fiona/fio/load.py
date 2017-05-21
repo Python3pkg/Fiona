@@ -13,7 +13,7 @@ from fiona.fio import options
 from fiona.transform import transform_geom
 
 
-FIELD_TYPES_MAP_REV = dict([(v, k) for k, v in fiona.FIELD_TYPES_MAP.items()])
+FIELD_TYPES_MAP_REV = dict([(v, k) for k, v in list(fiona.FIELD_TYPES_MAP.items())])
 
 
 @click.command(short_help="Load GeoJSON to a dataset in another format.")
@@ -51,16 +51,16 @@ def load(ctx, output, driver, src_crs, dst_crs, sequence, layer):
     first_line = next(stdin)
 
     # If input is RS-delimited JSON sequence.
-    if first_line.startswith(u'\x1e'):
+    if first_line.startswith('\x1e'):
         def feature_gen():
-            buffer = first_line.strip(u'\x1e')
+            buffer = first_line.strip('\x1e')
             for line in stdin:
-                if line.startswith(u'\x1e'):
+                if line.startswith('\x1e'):
                     if buffer:
                         feat = json.loads(buffer)
                         feat['geometry'] = transformer(feat['geometry'])
                         yield feat
-                    buffer = line.strip(u'\x1e')
+                    buffer = line.strip('\x1e')
                 else:
                     buffer += line
             else:
@@ -90,7 +90,7 @@ def load(ctx, output, driver, src_crs, dst_crs, sequence, layer):
         schema = {'geometry': first['geometry']['type']}
         schema['properties'] = dict([
             (k, FIELD_TYPES_MAP_REV.get(type(v)) or 'str')
-            for k, v in first['properties'].items()])
+            for k, v in list(first['properties'].items())])
 
         with fiona.drivers(CPL_DEBUG=verbosity > 2):
             with fiona.open(

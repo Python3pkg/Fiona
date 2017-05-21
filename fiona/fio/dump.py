@@ -68,7 +68,7 @@ def dump(ctx, input, encoding, precision, indent, compact, record_buffered,
         with fiona.drivers(CPL_DEBUG=verbosity > 2):
             with fiona.open(input, **open_kwds) as source:
                 meta = source.meta
-                meta['fields'] = dict(source.schema['properties'].items())
+                meta['fields'] = dict(list(source.schema['properties'].items()))
 
                 if record_buffered:
                     # Buffer GeoJSON data at the feature level for smaller
